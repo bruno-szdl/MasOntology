@@ -73,10 +73,10 @@ public class OwlOntoLayer {
 
     public static OWLOntology loadOntology(IRI ontologyIRI) throws OWLOntologyCreationException {
         if (ontologyIRI == null) {
-            throw new NullPointerException("Path to the ontoloy file can't be null.");
+            throw new NullPointerException("Path to the ontoloy can't be null.");
         }
         OWLOntologyManager ontologyManager = OwlOntoLayer.createOntologyManager();
-        return ontologyManager.loadOntologyFromOntologyDocument(ontologyIRI);
+        return ontologyManager.loadOntology(ontologyIRI);
     }
 
     public static OWLOntologyManager createOntologyManager() {
