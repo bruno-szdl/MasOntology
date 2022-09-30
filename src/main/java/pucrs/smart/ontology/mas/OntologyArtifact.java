@@ -128,6 +128,7 @@ public class OntologyArtifact extends Artifact {
 	void getClassNames(OpFeedbackParam<Literal[]> classes){
 		List<Object> classNames = queryEngine.getClassNames();
 		classes.set(classNames.toArray(new Literal[classNames.size()]));
+		System.out.println(classNames.toArray(new Literal[classNames.size()]).getAsListOfTerms())
 	}
 	
 	
