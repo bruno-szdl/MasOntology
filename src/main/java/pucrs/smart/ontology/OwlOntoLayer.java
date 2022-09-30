@@ -37,14 +37,12 @@ public class OwlOntoLayer {
     protected String ontologyFilePath = null;
 
     public OwlOntoLayer(String ontologyFilePath) throws OWLOntologyCreationException {
-        IRI iri = IRI.create((File)new File(ontologyFilePath));
-        this.ontologyFilePath = iri.toString();
-        System.out.println("Java - OwlOntoLayer ontologyFilePath " + ontologyFilePath);
+        IRI iri = IRI.create(ontologyFilePath);
+        System.out.println("Java - OwlOntoLayer ontologyPath " + ontologyFilePath);
         this.ontology = OwlOntoLayer.loadOntology(iri);
     }
     public OwlOntoLayer(String ontologyFilePath, OWLReasoner reasoner) throws OWLOntologyCreationException {
-        IRI iri = IRI.create((File)new File(ontologyFilePath));
-        this.ontologyFilePath = iri.toString();
+        IRI iri = IRI.create(ontologyFilePath);
         this.ontology = OwlOntoLayer.loadOntology(iri);
         System.out.println("Java - OwlOntoLayer reasoner " + reasoner);
         this.reasoner = reasoner;
