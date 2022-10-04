@@ -36,6 +36,12 @@ public class OntoQueryLayer {
         String iri = this.ontology.getOntologyIRI() + "#" + className;
         return factory.getOWLClass(iri);
     }
+    
+    private OWLClass getOWLClassWithHashtag(String className) {
+        OWLDataFactory factory = this.ontology.getOntology().getOWLOntologyManager().getOWLDataFactory();
+        String iri = className;
+        return factory.getOWLClass(iri);
+    }
 
     private OWLNamedIndividual getOWLIndividual(String individualName) {
         OWLDataFactory factory = this.ontology.getOntology().getOWLOntologyManager().getOWLDataFactory();
