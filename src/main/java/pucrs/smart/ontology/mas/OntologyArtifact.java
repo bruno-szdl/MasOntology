@@ -151,7 +151,7 @@ public class OntologyArtifact extends Artifact {
 	 */
 	@OPERATION
 	void isSubConcept(String subConceptName, String superConceptName, OpFeedbackParam<Boolean> isSubConcept) {
-		isSubConcept.set(queryEngine.getQuery().isSubConceptOf(subConceptName, superConceptName));
+		isSubConcept.set(queryEngine.getQuery().isSubConceptOfWithHashtag(subConceptName, superConceptName));
 	}
 
 	/**
