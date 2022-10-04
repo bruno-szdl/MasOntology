@@ -15,22 +15,20 @@ import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory;
 import cartago.Artifact;
 import cartago.OPERATION;
 import cartago.OpFeedbackParam;
-import jason.asSyntax.Literal;
-import jason.asSyntax.ListTerm;
-import jason.asSyntax.ListTermImpl;
+import jason.asSyntax.*;
 import pucrs.smart.ontology.OwlOntoLayer;
 
 public class OntologyArtifact extends Artifact {
 	private Logger logger = Logger.getLogger(OntologyArtifact.class.getName());
-	
+
 	private OwlOntoLayer onto = null;
 	private OntoQueryLayerLiteral queryEngine;
-	
+
 	void init(String ontologyPath) {
 		logger.info("Importing ontology from " + ontologyPath);
 		try {
 			this.onto = new OwlOntoLayer(ontologyPath);
-			OWLReasonerFactory reasonerFactory = new StructuralReasonerFactory();			
+			OWLReasonerFactory reasonerFactory = new StructuralReasonerFactory();
 			this.onto.setReasoner(reasonerFactory.createReasoner(this.onto.getOntology()));
 
 			queryEngine = new OntoQueryLayerLiteral(this.onto);
@@ -41,7 +39,7 @@ public class OntologyArtifact extends Artifact {
 			logger.info("An unexpected error occurred: "+e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * @param instanceName Name of the new instance.
 	 * @param conceptName Name of the concept which the new instance instances.
@@ -50,7 +48,7 @@ public class OntologyArtifact extends Artifact {
 	void addInstance(String instanceName, String conceptName) {
 		queryEngine.getQuery().addInstance(instanceName, conceptName);
 	}
-	
+
 	/**
 	 * @param instanceName Name of the new instance.
 	 */
@@ -58,7 +56,7 @@ public class OntologyArtifact extends Artifact {
 	void addInstance(String instanceName) {
 		queryEngine.getQuery().addInstance(instanceName);
 	}
-	
+
 	/**
 	 * @param instanceName Name of the instance.
 	 * @param conceptName Name of the concept.
@@ -68,7 +66,7 @@ public class OntologyArtifact extends Artifact {
 	void isInstanceOf(String instanceName, String conceptName, OpFeedbackParam<Boolean> isInstance) {
 		isInstance.set(queryEngine.getQuery().isInstanceOf(instanceName, conceptName));
 	}
-	
+
 	/**
 	 * @param conceptName Name of the concept.
 	 * @param instances A free variable to receive the list of instances in the form of instances(concept,instance)
@@ -78,7 +76,7 @@ public class OntologyArtifact extends Artifact {
 		List<Object> individuals = queryEngine.getIndividualNames(conceptName);
 		instances.set(individuals.toArray(new Literal[individuals.size()]));
 	}
-	
+
 	/**
 	* @return A list of ({@link OWLObjectProperty}).
 	*/
@@ -87,7 +85,7 @@ public class OntologyArtifact extends Artifact {
 		List<Object> names = queryEngine.getObjectPropertyNames();
 		objectPropertyNames.set(names.toArray(new Literal[names.size()]));
 	}
-	
+
 	/**
 	 * @param domainName Name of the instance ({@link OWLNamedIndividual}} which represent the property <i>domain</i>.
 	 * @param propertyName Name of the new property.
@@ -97,7 +95,7 @@ public class OntologyArtifact extends Artifact {
 	void addProperty(String domainName, String propertyName, String rangeName) {
 		queryEngine.getQuery().addProperty(domainName, propertyName, rangeName);
 	}
-	
+
 	/**
 	 * @param domainName Name of the instance which represents the domain of the property.
 	 * @param propertyName Name of the property.
@@ -108,7 +106,7 @@ public class OntologyArtifact extends Artifact {
 	void isRelated(String domainName, String propertyName, String rangeName, OpFeedbackParam<Boolean> isRelated) {
 		isRelated.set(queryEngine.getQuery().isRelated(domainName, propertyName, rangeName));
 	}
-	
+
 	/**
 	 * @param domain The name of the instance which corresponds to the domain of the property.
 	 * @param propertyName Name of the property
@@ -122,7 +120,7 @@ public class OntologyArtifact extends Artifact {
 		}
 		instances.set(individuals.toString());
 	}
-	
+
 	/**
 	* @return A list of ({@link OWLClass}).
 	*/
@@ -131,11 +129,11 @@ public class OntologyArtifact extends Artifact {
 		List<Object> classNames = queryEngine.getClassNames();
 		ListTerm classNamesList = new ListTermImpl();
 		for (Object t: classNames)
-		    classNamesList = classNamesList.append(t);
+		    classNamesList = classNamesList.append((Term)t);
 		classes.set(classNamesList);
 	}
-	
-	
+
+
 	/**
 	 * @param conceptName Name of the new concept.
 	 */
@@ -143,7 +141,7 @@ public class OntologyArtifact extends Artifact {
 	void addConcept(String conceptName) {
 		queryEngine.getQuery().addConcept(conceptName);
 	}
-	
+
 	/**
 	 * @param subConceptName Name of the supposed sub-concept.
 	 * @param superConceptName Name of the concept to be tested as the super-concept.
@@ -154,7 +152,7 @@ public class OntologyArtifact extends Artifact {
 	void isSubConcept(String subConceptName, String superConceptName, OpFeedbackParam<Boolean> isSubConcept) {
 		isSubConcept.set(queryEngine.getQuery().isSubConceptOf(subConceptName, superConceptName));
 	}
-		
+
 	/**
 	 * @param outputFile Path to the new file in the structure of directories.
 	 * @throws OWLOntologyStorageException
@@ -167,7 +165,7 @@ public class OntologyArtifact extends Artifact {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	* @return A list of ({@link OWLAnnotationProperty}).
 	*/
@@ -176,7 +174,7 @@ public class OntologyArtifact extends Artifact {
 		List<Object> names = queryEngine.getAnnotationPropertyNames();
 		AnnotationPropertyNames.set(names.toArray(new Literal[names.size()]));
 	}
-	
+
 	/**
 	* @return A list of ({@link OWLDataProperty}).
 	*/
@@ -185,5 +183,5 @@ public class OntologyArtifact extends Artifact {
 		List<Object> names = queryEngine.getDataPropertyNames();
 		dataPropertyNames.set(names.toArray(new Literal[names.size()]));
 	}
-		
+
 }
