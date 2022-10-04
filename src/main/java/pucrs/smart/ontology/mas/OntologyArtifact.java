@@ -131,6 +131,7 @@ public class OntologyArtifact extends Artifact {
 		for (Object t: classNames)
 		    classNamesList = classNamesList.append((Term)t);
 		classes.set(classNamesList);
+		defineObsProperty("xx",classNamesList);
 	}
 
 
