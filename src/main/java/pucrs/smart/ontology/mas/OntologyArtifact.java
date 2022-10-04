@@ -128,7 +128,7 @@ public class OntologyArtifact extends Artifact {
 	void getClassNames(OpFeedbackParam<ListTerm> classes){
 		List<Object> classNames = queryEngine.getClassNames();
 		classes.set(classNames.toArray(new Literal[classNames.size()]));
-		defineObsProperty("xx",classes);
+		defineObsProperty("xx", classNames);
 	}
 
 
