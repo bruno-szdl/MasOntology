@@ -83,6 +83,10 @@ public class OntoQueryLayer {
     public boolean isSubConceptOf(String subConceptName, String superConceptName) {
         return this.ontology.isSubConceptOf(this.getOWLClass(subConceptName), this.getOWLClass(superConceptName));
     }
+    
+    public boolean isSubConceptOfWithHashtag(String subConceptName, String superConceptName) {
+        return this.ontology.isSubConceptOf(this.getOWLClassWithHashtag(subConceptName), this.getOWLClassWithHashtag(superConceptName));
+    }
 
     public void saveOntology(String outputFile) throws OWLOntologyStorageException {
         this.ontology.saveOntology(outputFile);
