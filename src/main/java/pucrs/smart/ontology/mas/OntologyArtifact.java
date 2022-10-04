@@ -130,7 +130,7 @@ public class OntologyArtifact extends Artifact {
 	void getClassNames(OpFeedbackParam<ListTerm> classes){
 		List<Object> classNames = queryEngine.getClassNames();
 		ListTerm classNamesList = new ListTermImpl();
-		for (Term t: classNames)
+		for (Object t: classNames)
 		    classNamesList = classNamesList.append(t);
 		classes.set(classNamesList);
 	}
