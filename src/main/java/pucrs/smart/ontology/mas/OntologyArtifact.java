@@ -16,6 +16,8 @@ import cartago.Artifact;
 import cartago.OPERATION;
 import cartago.OpFeedbackParam;
 import jason.asSyntax.Literal;
+import jason.asSyntax.ListTerm;
+import jason.asSyntax.ListTermImpl;
 import pucrs.smart.ontology.OwlOntoLayer;
 
 public class OntologyArtifact extends Artifact {
@@ -125,9 +127,12 @@ public class OntologyArtifact extends Artifact {
 	* @return A list of ({@link OWLClass}).
 	*/
 	@OPERATION
-	void getClassNames(OpFeedbackParam<Literal[]> classes){
+	void getClassNames(ListTerm classes){
 		List<Object> classNames = queryEngine.getClassNames();
-		classes.set(classNames.toArray(new Literal[classNames.size()]));
+		ListTerm classNamesList = new ListTermImpl();
+		for (Term t: classNames)
+		    classNamesList = classNamesList.append(t.clone());
+		classes.set(classNamesList);
 	}
 	
 	
