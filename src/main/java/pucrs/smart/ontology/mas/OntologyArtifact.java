@@ -125,13 +125,10 @@ public class OntologyArtifact extends Artifact {
 	* @return A list of ({@link OWLClass}).
 	*/
 	@OPERATION
-	void getClassNames(OpFeedbackParam<ListTerm> classes){
+	void getObjectPropertyNames(OpFeedbackParam<Literal[]> objectPropertyNames){
 		List<Object> classNames = queryEngine.getClassNames();
-		ListTerm classNamesList = new ListTermImpl();
-		for (Object t: classNames)
-		    classNamesList = classNamesList.append((Term)t);
-		classes.set(classNamesList);
-		defineObsProperty("xx",classNamesList);
+		classes.set(classNames.toArray(new Literal[classNames.size()]));
+		defineObsProperty("xx",classes);
 	}
 
 
